@@ -3,7 +3,13 @@ PImage tail;
 boolean gameOver=false;
 int tailX;
 int tailY;
+import ddf.minim.*;
+AudioSample sound1;  
+AudioSample sound2;
 void setup(){
+  Minim minim = new Minim(this); 
+  sound1 = minim.loadSample("shiny-objects.wav");
+  sound2 = minim.loadSample("homer-doh.wav");
   size(400,600);
  donkey = loadImage("Donkey.jpg");     
  donkey.resize(width,height);
@@ -20,15 +26,23 @@ void draw(){
  }
  else{
    background(200,200,200);
-   
  }
  rect(0,0,45,45);
-if(mousePressed){
-    image(tail, mouseX, mouseY);
-    gameOver=true;
+  if(!gameOver){
+    if(mousePressed){
+  if(mouseX>336&&mouseX<389&&mouseY>284&&mouseY<386){   
+    sound1.trigger();   
+  }
+  else{
+    sound2.trigger(); 
+  }
+  gameOver=true;
     tailX=mouseX;
-    tailY=mouseY;
+    tailY=mouseY;}
   //game over
   //show donkey+tail
+}else{
+background(donkey);
+    image(tail, tailX, tailY);
 }
 }
